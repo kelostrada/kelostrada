@@ -20,7 +20,7 @@ public class Test {
         WorkersList wl = new WorkersList();
         
         wl.add(new Worker("Bartosz","Kalinowski",new Date(1989,2,1)));
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<130; i++) {
             wl.add(Worker.getRandomWorker());
         }
         
@@ -42,5 +42,7 @@ public class Test {
         for (Thread t : threads) {
             t.start();
         }
+        
+        
     }
 }
