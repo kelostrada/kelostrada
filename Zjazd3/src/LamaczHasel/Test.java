@@ -27,7 +27,7 @@ public class Test {
         boolean czyLosoweHaslo = true;
         
         if (args.length > 2) {
-            if (Integer.parseInt(args[1]) == 1) {
+            if (Integer.parseInt(args[2]) == 1) {
                 czyLosoweHaslo = false;
             }
         }
