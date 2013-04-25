@@ -18,12 +18,10 @@ public class LockedRepository {
         return locked;
     }
     
-    public boolean tryUnlock(Password password) throws ContentLockedException {
+    public boolean tryUnlock(Password password)  {
         if (this.password.equals(password)) {
             locked = false;
             password.setFound(true);
-        } else {
-            throw new ContentLockedException();
         }
         
         return !locked;
