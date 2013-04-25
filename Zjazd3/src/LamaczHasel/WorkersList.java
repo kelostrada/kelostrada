@@ -13,6 +13,10 @@ public class WorkersList {
         workers.add(worker);
     }
     
+    public Worker getAt(int i) {
+        return workers.get(i);
+    }
+    
     public ArrayList<ArrayList<Worker>> getWorkersDivided(int n) {
         ArrayList<ArrayList<Worker>> workersDivided;
         
