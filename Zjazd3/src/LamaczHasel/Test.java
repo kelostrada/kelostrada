@@ -14,7 +14,7 @@ public class Test {
         /* Muszą być argumenty programu */
         if (args.length<2) {
             System.err.println("Należy podać argument zawierający liczbę wątków oraz liczbę pracowników.");
-            System.err.println("PRZYKŁAD: java LamaczHasel.jar 4 100 1");
+            System.err.println("PRZYKŁAD: java -jar LamaczHasel.jar 4 100 1");
             System.exit(1);
         }
         
