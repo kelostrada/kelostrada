@@ -27,7 +27,7 @@ public class WorkersList {
             workersDivided.add(new ArrayList<Worker>());
         }
         
-        int workerPerTask = (int)Math.ceil(workers.size()/(double)size);
+        //int workerPerTask = (int)Math.ceil(workers.size()/(double)size);
         int k = 0;
         
         for (int i=0;i<workers.size();i++) {

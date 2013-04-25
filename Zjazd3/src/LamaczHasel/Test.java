@@ -2,6 +2,8 @@ package LamaczHasel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author bartosz.kalinowski
@@ -9,6 +11,7 @@ import java.util.Arrays;
 public class Test {
     public static void main(String[] args) {
         
+        /* Musi być argument programu */
         if (args.length==0) {
             System.err.println("Należy podać argument zawierający liczbę wątków.");
             System.exit(1);
@@ -17,6 +20,7 @@ public class Test {
         int watki = Integer.parseInt(args[0]);
         System.out.println("Liczba wątków: " + watki);
         
+        /* Generowanie listy pracowników (losowo) */
         WorkersList wl = new WorkersList();
         
         wl.add(new Worker("Bartosz","Kalinowski",new Date(1989,2,1)));
@@ -24,10 +28,16 @@ public class Test {
             wl.add(Worker.getRandomWorker());
         }
         
-        Password password = PasswordGenerator.GenerateRandomPassword(wl);
-        LockedRepository lr = new LockedRepository("Tajny Content", password);
+        /* Podzielenie listy pracowników na mniejsze listy, zależnie od ilości wątków (każdy wątek dostaje mniej więcej równą liczbę pracowników do sprawdzenia */
         ArrayList<ArrayList<Worker>> workersDivided = wl.getWorkersDivided(watki);
         System.out.println(Arrays.deepToString(workersDivided.toArray()));
+        
+        /* Generowanie hasła (można odkomentować, żeby brać hasło wygenerowane z ostatniego pracownika (teoretycznie najdłuższe obliczenia) */
+        //Password password = PasswordGenerator.GenerateRandomPassword(wl);
+        Password password = new Password(workersDivided.get(workersDivided.size()-1).get(workersDivided.get(workersDivided.size()-1).size()-1).toString());
+        LockedRepository lr = new LockedRepository("Tajny Content", password);
+        
+        
         
         Thread[] threads = new Thread[watki+1];
         
@@ -43,8 +53,14 @@ public class Test {
             t.start();
         }
         
+        
         while (lr.locked) {
             Thread.yield();
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         for (Thread t : threads) {
