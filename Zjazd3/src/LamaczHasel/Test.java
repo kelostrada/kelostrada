@@ -20,7 +20,7 @@ public class Test {
         WorkersList wl = new WorkersList();
         
         wl.add(new Worker("Bartosz","Kalinowski",new Date(1989,2,1)));
-        for (int i=0; i<130; i++) {
+        for (int i=0; i<100; i++) {
             wl.add(Worker.getRandomWorker());
         }
         
@@ -29,20 +29,29 @@ public class Test {
         ArrayList<ArrayList<Worker>> workersDivided = wl.getWorkersDivided(watki);
         System.out.println(Arrays.deepToString(workersDivided.toArray()));
         
-        Thread[] threads = new Thread[watki];
+        Thread[] threads = new Thread[watki+1];
         
         Thread dialog = new Thread(new DialogPart(lr));
         
         threads[0] = dialog;
         
-        for (int i=1; i<watki; i++) {
+        for (int i=1; i<=watki; i++) {
             threads[i] = new Thread(new PasswordGuesser(workersDivided.get(i-1),lr,i));
         }
-        
+        long start = System.currentTimeMillis();
         for (Thread t : threads) {
             t.start();
         }
         
+        while (lr.locked) {
+            Thread.yield();
+        }
         
+        for (Thread t : threads) {
+            t.interrupt();
+        }
+        
+        long elapsedTimeMillis = System.currentTimeMillis()-start;
+        System.out.println("Program szukał hasła przez: " + elapsedTimeMillis/1000F + " sekund.");
     }
 }

@@ -23,25 +23,26 @@ public class PasswordGuesser implements Runnable {
     public void run() {
         System.out.println("Wątek nr. " + threadNumber + " rozpoczął pracę.");
         String password = "";
-        do {
-            
-            for (Worker w : workers) {
-                System.out.println("Wątek nr. " + threadNumber + " obsługuje pracownika: " + w);
-                for (int i=0; i<1000000; i++) {
-                    if (repo.tryUnlock(PasswordGenerator.GenerateFromSeed(w, i))) {
-                        
-                        System.out.println("Wątek nr. " + threadNumber + " zakończył pracę i znalazł hasło.");
-                        Thread.yield();
-                        return;
-                    }
+        for (Worker w : workers) {
+            //System.out.println("Wątek nr. " + threadNumber + " obsługuje pracownika: " + w);
+            for (int i = 0; i < 1000000; i++) {
+                if (repo.tryUnlock(PasswordGenerator.GenerateFromSeed(w, i))) {
+                    System.out.println("Wątek nr. " + threadNumber + " zakończył pracę i znalazł hasło.");
+                    return;
                 }
-                
+                if (!repo.isLocked()) {
+                    System.out.println("Wątek nr. " + threadNumber + " zakończył pracę.");
+                    return;
+                }
+                if (Thread.interrupted()) {
+                    System.out.println("Wątek nr. " + threadNumber + " przerwany.");
+                    return;
+                }
+                Thread.yield();
             }
-            Thread.yield();
-        } while (repo.isLocked());
+
+        }
 
         System.out.println("Wątek nr. " + threadNumber + " zakończył pracę.");
     }
-
-    
 }
