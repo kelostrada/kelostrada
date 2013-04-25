@@ -6,7 +6,6 @@ package LamaczHasel;
 
 public class Password {
     String password;
-    boolean found = false;
     
     public Password(String password) {
         this.password = password;
@@ -33,13 +32,5 @@ public class Password {
     @Override
     public int hashCode() {
         return password.hashCode();
-    }
-
-    public void setFound(boolean found) {
-        this.found = found;
-    }
-
-    public boolean isFound() {
-        return found;
     }
 }

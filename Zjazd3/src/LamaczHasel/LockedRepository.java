@@ -21,10 +21,10 @@ public class LockedRepository {
     public boolean tryUnlock(Password password)  {
         if (this.password.equals(password)) {
             locked = false;
-            password.setFound(true);
+            return true;
         }
         
-        return !locked;
+        return false;
     }
     
     public Object getContent() throws ContentLockedException {
