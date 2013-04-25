@@ -16,9 +16,12 @@ public class DialogPart implements Runnable {
 
     @Override
     public void run() {
-        while (!repo.tryUnlock(new Password(JOptionPane.showInputDialog("Podaj proponowane hasło")))) {
+        while (repo.isLocked()) {
+            if (repo.tryUnlock(new Password(JOptionPane.showInputDialog("Podaj proponowane hasło")))) {
+                System.out.println("Znalazłem hasło ręcznie.");
+            }
         }
-        System.out.println("Znalazłem hasło ręcznie.");
+        System.out.println("Wątek Dialogowy zakończył się.");
     }
     
 }
