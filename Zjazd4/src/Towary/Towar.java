@@ -6,7 +6,7 @@ package Towary;
 
 public class Towar {
     private int id;
-    private double weight;
+    double weight;
     private static int currentId;
     private static final Object lock = new Object();
     
