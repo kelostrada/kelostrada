@@ -5,9 +5,9 @@ package Towary;
  */
 
 public class TowarNode {
-    private Towar towar;
-    private TowarNode prev = null;
-    private TowarNode next = null;
+    Towar towar;
+    TowarNode prev = null;
+    TowarNode next = null;
     
     public TowarNode(double w) {
         towar = new Towar(w);
@@ -16,4 +16,11 @@ public class TowarNode {
     public TowarNode(Towar t) {
         towar = t;
     }
+
+    @Override
+    public String toString() {
+        return towar.toString();
+    }
+    
+    
 }
