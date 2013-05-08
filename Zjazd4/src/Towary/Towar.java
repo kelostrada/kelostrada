@@ -33,10 +33,12 @@ public class Towar {
     }
     
     public static Towar Parse(String text) throws NumberFormatException {
-        String[] dane = text.split(" ");
-        if (dane.length != 2) {
-            throw new NumberFormatException("Błędne wyrażenie");
+        synchronized(lock) {
+            String[] dane = text.split(" ");
+            if (dane.length != 2) {
+                throw new NumberFormatException("Błędne wyrażenie");
+            }
+            return new Towar(Integer.parseInt(dane[0]),Double.parseDouble(dane[1]));
         }
-        return new Towar(Integer.parseInt(dane[0]),Double.parseDouble(dane[1]));
     }
 }
