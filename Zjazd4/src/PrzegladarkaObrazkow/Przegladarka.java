@@ -4,9 +4,9 @@ package PrzegladarkaObrazkow;
  * @author Kelu
  */
 import java.awt.*;
-import javax.swing.*;
 import java.io.File;
 import java.io.FilenameFilter;
+import javax.swing.*;
 
 class ImagePanel extends JPanel {
 
@@ -120,6 +120,7 @@ public class Przegladarka extends JFrame {
         f.paintComponent(getGraphics());
 
         pack();
+        setLocationRelativeTo(null);
     }
     static final String[] EXTENSIONS = new String[]{
         "gif", "jpg"
