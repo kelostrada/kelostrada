@@ -28,15 +28,6 @@ public class Test {
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        /*
-         TowarNode node = lista.head;
-         while (node != null) {
-         System.out.println(node);
-         node = node.next;
-         }
-         */
-        
-        
     }
 
     static class Reader implements Runnable {
@@ -57,7 +48,6 @@ public class Test {
                             System.out.println("Utworzono " + counter + " obiektów.");
                         }
                     }
-
                     Thread.yield();
                 }
             } catch (FileNotFoundException ex) {
@@ -104,6 +94,7 @@ public class Test {
                         }
                     }
                 }
+                Thread.yield();
             }
 
             System.out.println("Całkowita waga: " + suma + " kg");
