@@ -32,7 +32,7 @@ class Customer extends Person {
         return String.valueOf(cash);
     }
 
-    public void pack(Box box) {
+    public void pack(Box box) throws Exception {
         shoppingCart.pack(box);
     }
 

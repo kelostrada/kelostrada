@@ -2,10 +2,6 @@ package Kwiaciarnia2;
 
 import Kwiaciarnia2.Flowers.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * @author bartosz.kalinowski
@@ -28,15 +24,8 @@ class FloristsTest {
         return value;
     }
 
-    public static void main(String[] args) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("pl-PL"));
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date date = new Date();
-        date.setYear(101);
-        date.setMonth(0);
-        date.setDate(10);
-        System.out.println(simpleDateFormat.format(date));
-
+    public static void main(String[] args) throws ParseException, Exception {
+        
         // Kwiaciarnia samoobsługowa
         Florist kwiaciarnia = new Florist();
 
