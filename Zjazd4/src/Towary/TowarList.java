@@ -19,7 +19,7 @@ public class TowarList {
         size = 1;
     }
 
-    void add(Towar t) {
+    synchronized void add(Towar t) {
         TowarNode node = new TowarNode(t);
         if (head == null) {
             head = tail = node;
@@ -35,7 +35,7 @@ public class TowarList {
         size++;
     }
 
-    Towar get(int i) {
+    synchronized Towar get(int i) {
         TowarNode node = head;
         if (node == null) {
             return null;

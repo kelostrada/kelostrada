@@ -14,7 +14,7 @@ public class Test {
     static final Object lock = new Object();
 
     public static void main(String[] args) {
-        //FileGenerator.GenerateFile(file, 100000);
+        //FileGenerator.GenerateFile(file, 10000);
 
         Thread reader = new Thread(new Reader());
         reader.start();
