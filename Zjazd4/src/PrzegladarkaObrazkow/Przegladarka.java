@@ -123,7 +123,7 @@ public class Przegladarka extends JFrame {
         setLocationRelativeTo(null);
     }
     static final String[] EXTENSIONS = new String[]{
-        "gif", "jpg"
+        "gif", "jpg", "GIF", "JPG"
     };
     static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
         @Override
