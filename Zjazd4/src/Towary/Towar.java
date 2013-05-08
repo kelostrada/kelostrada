@@ -26,6 +26,9 @@ public class Towar {
              }
          }
      }
-     
-     
+
+    @Override
+    public String toString() {
+        return "" + id + " " + weight;
+    }
 }
