@@ -19,7 +19,7 @@ public class TowarList {
         size = 1;
     }
 
-    synchronized void add(Towar t) {
+    void add(Towar t) {
         TowarNode node = new TowarNode(t);
         if (head == null) {
             head = tail = node;
@@ -34,8 +34,45 @@ public class TowarList {
         }
         size++;
     }
+    
+    void push(Towar t) {
+        TowarNode node = new TowarNode(t);
+        if (head == null) {
+            head = tail = node;
+        } else if (head == tail) {
+            head = node;
+            head.next = tail;
+            tail.prev = head;
+        } else {
+            head.prev = node;
+            node.next = head;
+            head = node;
+        }
+        size++;
+    }
+    
+    Towar popBack() {
+        if (size > 0 && tail != null) {
+            size--;
+            if (tail == head) {
+                Towar t = tail.towar;
+                tail = null;
+                head = null;
+                return t;
+            } else {
+                Towar t = tail.towar;
+                tail = tail.prev;
+                tail.next = null;
+                return t;
+            }
+        } else {
+            return null;
+        }
+    }
+    
+    
 
-    synchronized Towar get(int i) {
+    Towar get(int i) {
         TowarNode node = head;
         if (node == null) {
             return null;
