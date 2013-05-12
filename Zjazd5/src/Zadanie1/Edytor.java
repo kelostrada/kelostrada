@@ -34,12 +34,14 @@ public class Edytor extends JFrame {
     
     public Edytor() {
         super("Edytor");
-        //setLocationRelativeTo(null);
+        
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new TextPanel();
         add(panel);
         pack();
+        setLocationRelativeTo(null);
+        
     }
     
     public static void main(String args[]) {
