@@ -20,6 +20,7 @@ class FinalPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLUE);
+        
         drawBorders(getWidth(), getHeight(), g);
     }
 

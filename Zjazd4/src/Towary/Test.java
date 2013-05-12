@@ -1,8 +1,9 @@
 package Towary;
 
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.util.Date;
 
 /**
  * @author bartosz.kalinowski
@@ -12,22 +13,17 @@ public class Test {
     static String file = "C:\\Temp\\Towary.txt";
     static TowarList lista = new TowarList();
     static final Object lock = new Object();
+    static long czas;
 
     public static void main(String[] args) {
-        FileGenerator.GenerateFile(file, 100000);
+        //FileGenerator.GenerateFile(file, 100);
 
         Thread reader = new Thread(new Reader());
-        reader.start();
         Thread sumator = new Thread(new Sumator(reader));
+        czas = new Date().getTime();
+        reader.start();
         sumator.start();
 
-        while (reader.isAlive() || sumator.isAlive()) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     static class Reader implements Runnable {
@@ -37,12 +33,48 @@ public class Test {
         @Override
         public void run() {
             try {
+                /*
+                FileInputStream fis = new FileInputStream(file);
+                FileChannel fileChannel = fis.getChannel();
+                ByteBuffer byteBuffer = ByteBuffer.allocate(50241024);
+
+                int bytes = fileChannel.read(byteBuffer);
+                int i = 0;
+                StringBuilder s = new StringBuilder("");
+                
+                while (bytes != -1) {
+                    byteBuffer.flip();
+                    
+                    while (byteBuffer.hasRemaining()) {
+                        char c = (char) byteBuffer.get();
+                        if (c != '\n') {
+                            s.append(c);
+                        } else {
+                            synchronized (lock) {
+                                lista.push(Towar.Parse(s.toString()));
+                                counter++;
+                                if (counter % 200 == 0) {
+                                    System.out.println("Utworzono " + counter + " obiektów.");
+                                }
+                            }
+                            s.delete(0, s.length());
+                        }
+                    }
+                    byteBuffer.clear();
+                    bytes = fileChannel.read(byteBuffer);
+                    i++;
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+                */
+                
                 FileReader fstream = new FileReader(file);
                 BufferedReader in = new BufferedReader(fstream);
                 String line;
                 while ((line = in.readLine()) != null) {
                     synchronized (lock) {
-                        lista.add(Towar.Parse(line));
+                        lista.push(Towar.Parse(line));
                         counter++;
                         if (counter % 200 == 0) {
                             System.out.println("Utworzono " + counter + " obiektów.");
@@ -50,12 +82,13 @@ public class Test {
                     }
                     Thread.yield();
                 }
+                 
             } catch (FileNotFoundException ex) {
                 System.err.println("Błąd odczytu: " + ex.getMessage());
             } catch (IOException ex) {
                 System.err.println("Błąd parsowania: " + ex.getMessage());
             }
-
+            System.out.println("Czas :" + (new Date().getTime() - czas));
         }
     }
 
@@ -63,7 +96,7 @@ public class Test {
 
         Thread reader;
         double suma;
-        int counter;
+        int counter = 0;
 
         Sumator(Thread reader) {
             this.reader = reader;
@@ -73,7 +106,7 @@ public class Test {
         public void run() {
             while (1 == 1) {
                 synchronized (lock) {
-                    Towar t = lista.get(counter);
+                    Towar t = lista.popBack();
                     if (!reader.isAlive()) {
                         if (t == null) {
                             break;
@@ -98,6 +131,7 @@ public class Test {
             }
 
             System.out.println("Całkowita waga: " + suma + " kg");
+            System.out.println("Czas :" + (new Date().getTime() - czas));
 
         }
     }
