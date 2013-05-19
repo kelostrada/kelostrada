@@ -16,7 +16,7 @@ public class Test {
     static long czas;
 
     public static void main(String[] args) {
-        //FileGenerator.GenerateFile(file, 100);
+        //FileGenerator.GenerateFile(file, 1000000);
 
         Thread reader = new Thread(new Reader());
         Thread sumator = new Thread(new Sumator(reader));
