@@ -1,4 +1,4 @@
-package Zadanie3;
+package Zadanie4;
 import javax.swing.*;
 
 
@@ -37,6 +37,7 @@ public class MainClass {
     frame.add(button, BorderLayout.NORTH);
     frame.setSize(300, 150);
     frame.setVisible(true);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 }
   
