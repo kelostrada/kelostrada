@@ -45,6 +45,7 @@ class ImagePanel extends JPanel {
             setPreferredSize(new Dimension(300, 200));
             loaded = false;
         }
+        repaint();
 
     }
 }
