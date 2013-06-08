@@ -4,12 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -55,16 +52,13 @@ public class Komponenty extends JFrame {
         tekst.add(scrollingArea);
         
         p.add(tekst, "Center");
-        
-        //JPanel panelSouth = new JPanel();
-        //panelSouth.setLayout(new GridLayout(1,1));
-        
+                
         JPanel przechowywaczKlawiatury = new JPanel();
         przechowywaczKlawiatury.setLayout(new FlowLayout(FlowLayout.LEFT));
         
         JPanel klawiaturaNumeryczna = new JPanel();
         klawiaturaNumeryczna.setLayout(new GridLayout(3,3));
-        for (int i=0;i<9;i++) {
+        for (int i=1;i<10;i++) {
             klawiaturaNumeryczna.add(new JButton(String.valueOf(i)));
         }
         
@@ -87,7 +81,6 @@ public class Komponenty extends JFrame {
         panelSouth.add(Box.createGlue());
         
         p.add(panelSouth,"South");
-        
         
         add(p);
         
