@@ -1,72 +1,84 @@
 package Zadanie4;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import layout.TableLayout;
 
 /**
  * @author bartosz.kalinowski
  */
 
-class Kolko extends JLabel {
-    
-    String circle;
-    String tooltip;
-    
-    public Kolko(String circle, String tooltip) {
-        this.circle = circle;
-        this.tooltip = tooltip;
-        this.setText(circle);
-    }
-    
-}
-
 class Ramka extends JPanel {
     
-    String button;
+    String label;
     String circle;
-    String tooltip;
     int textFieldSize;
     
-    public Ramka(String button, String circle, String tooltip, int textFieldSize) {
-        this.button = button;
+    public Ramka(String label, String circle, int textFieldSize, int mnemonic, Icon icon) {
+        this.label = label;
         this.circle = circle;
-        this.tooltip = tooltip;
         this.textFieldSize = textFieldSize;
         
-        this.setPreferredSize(new Dimension(600,100));
+        double borderOut = 5;
+        double odstep = 2;
+        double szerokoscLewego = 70;
+        double szerokoscTekstu = 300;
+        double szerokoscLabela = 60;
+        double wysokoscRamki = 60;
         
-        setLayout(new BorderLayout());
+        double size[][] = {{borderOut,szerokoscLewego,odstep,szerokoscTekstu,odstep,szerokoscLabela,borderOut},{borderOut,wysokoscRamki,borderOut}};
         
-        JPanel left = new JPanel();
-        left.setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new TableLayout(size));
+       
+        JTextField tf = new JTextField(textFieldSize);
+        tf.setBorder(BorderFactory.createEtchedBorder(Color.RED, Color.orange));
         
-        JButton b = new JButton(button);
-        left.add(b);
+        JPanel labelek = new JPanel();
+        labelek.setLayout(new BorderLayout());
+        labelek.setBackground(Color.decode("#ffffcb"));
+        labelek.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        
+        JLabel b = new JLabel(label,icon, SwingConstants.RIGHT);
+        b.setDisplayedMnemonic(mnemonic);
+        b.setLabelFor(tf);
+        b.setHorizontalTextPosition(SwingConstants.LEFT);
+        
+        labelek.add(b,"East");
+        
+        add(labelek, "1,1,f,c");
+        add(tf, "3,1,l,c");
+        add(new RoundLabel(circle,30, Color.yellow),"5,1,r,c");
+        
+        
+        // Dodawanie panelu, po to żeby border był, głupie ale co tu lepszego wymyśleć =.=
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createLineBorder(Color.blue));
+        add(panel,"0,0,6,2");
+        
+        /*
+        setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+        
+        JPanel kolko = new JPanel();
+        kolko.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        RoundLabel rl = new RoundLabel(circle, 30, Color.yellow);
+        kolko.add(rl);
+        
+        Box tekst = Box.createVerticalBox();
         JTextField tf = new JTextField(textFieldSize);
         tf.setBorder(BorderFactory.createEtchedBorder(Color.RED, Color.ORANGE));
-        left.add(tf);
+        tf.setAlignmentY(CENTER_ALIGNMENT);
+        tekst.add(tf);
         
-        this.add(left, "West");
+        this.add(Box.createRigidArea(new Dimension(6,0)));
+        this.add(new JButton(button));
+        this.add(Box.createRigidArea(new Dimension(3,0)));
         
-        JPanel right = new JPanel();
-        right.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        right.add(new Kolko(circle, tooltip));
-        
-        this.add(right, "East");
-        
+        this.add(tekst);
+       
+        this.add(kolko);
+        */
     }
 }
 
@@ -74,9 +86,24 @@ class Ramka extends JPanel {
 public class Test {
     public static void main(String[] args) {
         JFrame form = new JFrame();
-        Ramka ramka = new Ramka("Kraj", "Jak wpisać kraj?","W polu obok<br><font color='red'>wpisz kraj</font><br><font color='blue'>pochodzenia towaru</font>",20);
-
-        form.add(ramka);
+        Ramka ramkaKraj = new Ramka("Kraj", "kraj",10, KeyEvent.VK_K, new ImageIcon("red.gif"));
+        Ramka ramkaMiasto = new Ramka("Miasto", "miasto", 25, KeyEvent.VK_M, new ImageIcon("red.gif"));
+        Ramka ramkaAdres = new Ramka("Adres", "adres", 30, KeyEvent.VK_A, new ImageIcon("green.gif"));
+        Ramka ramkaTelefon = new Ramka("Telefon", "telefon", 12, KeyEvent.VK_T, new ImageIcon("red.gif"));
+        Ramka ramkaFax = new Ramka("Fax", "fax", 12, KeyEvent.VK_F, new ImageIcon("green.gif"));
+        
+        double odstep = 3;
+        double wysokosc = 70;
+        
+        double[][] size = {{odstep,TableLayout.FILL,odstep},{odstep,wysokosc,odstep,wysokosc,odstep,wysokosc,odstep,wysokosc,odstep,wysokosc,odstep}};
+        
+        form.setLayout(new TableLayout(size));
+        
+        form.add(ramkaKraj,"1,1");
+        form.add(ramkaMiasto,"1,3");
+        form.add(ramkaAdres,"1,5");
+        form.add(ramkaTelefon,"1,7");
+        form.add(ramkaFax,"1,9");
         
         form.setVisible(true);
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
